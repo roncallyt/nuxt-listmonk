@@ -1,42 +1,38 @@
-<!--
-Get your module up and running quickly.
-
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
--->
-
-# My Module
+# Nuxt Listmonk
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-My new Nuxt module for doing amazing things.
+> Maintenance module for [Nuxt.js](https://nuxt.com/)
 
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+- [Release Notes](https://github.com/roncallyt/nuxt-listmonk/releases)
+- [Documentation](https://nuxt-listmonk.t7n.dev)
+<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/nuxt-listmonk?file=playground%2Fapp.vue) -->
 
 ## Features
 
 <!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- Nuxt 3 ready
+- Typescript support
 
 ## Quick Setup
 
-Install the module to your Nuxt application with one command:
+1. Add `nuxt-listmonk` dependency to your project:
 
 ```bash
-npx nuxi module add my-module
+npx nuxi module add nuxt-listmonk
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+2. Add `nuxt-listmonk` to the `modules` section of `nuxt.config.ts`:
 
+```js
+export default defineNuxtConfig({
+  modules: ['nuxt-listmonk'],
+});
+```
+That's it! You can now use Listmonk in your Nuxt app ✨
 
 ## Contribution
 
@@ -69,16 +65,21 @@ That's it! You can now use My Module in your Nuxt app ✨
 
 </details>
 
+## Support
+
+Hi, I am Thomerson Roncally, a Fullstack Developer that love to build things to help other developers. If you like my work and want to support me, you can donate here:
+
+[![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/roncallyt)
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/my-module
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-listmonk/latest.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-version-href]: https://npmjs.com/package/nuxt-listmonk
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/my-module
+[npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-listmonk.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-downloads-href]: https://npm.chart.dev/nuxt-listmonk
 
-[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/my-module
+[license-src]: https://img.shields.io/npm/l/nuxt-listmonk.svg?style=flat&colorA=020420&colorB=00DC82
+[license-href]: https://npmjs.com/package/nuxt-listmonk
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
