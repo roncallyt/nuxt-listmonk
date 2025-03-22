@@ -1,8 +1,11 @@
 {
-  "name": "my-module",
+  "name": "nuxt-listmonk",
   "version": "1.0.0",
-  "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
+  "description": "Listmonk module for nuxt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roncallyt/nuxt-listmonk.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -29,7 +32,8 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.16.0"
+    "@nuxt/kit": "^3.16.0",
+    "defu": "^6.1.4"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.2.1",

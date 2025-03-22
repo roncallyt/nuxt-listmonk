@@ -1,8 +1,8 @@
 <template>
   <div>
-    Nuxt module playground!
+    <ListmonkForm />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 </script>
