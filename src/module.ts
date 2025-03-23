@@ -51,7 +51,7 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
 
     addServerHandler({
       route: '/api/subscribe',
-      handler: resolve(runtimeDir, 'server/api/subscribe.ts'),
+      handler: resolve(runtimeDir, 'server/api/subscribe'),
     })
   },
 })
