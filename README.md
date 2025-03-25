@@ -5,7 +5,7 @@
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-> Maintenance module for [Nuxt.js](https://nuxt.com/)
+> Listmonk module for [Nuxt.js](https://nuxt.com/)
 
 - [Release Notes](https://github.com/roncallyt/nuxt-listmonk/releases)
 - [Documentation](https://nuxt-listmonk.t7n.dev)
