@@ -15,6 +15,13 @@ export default createConfigForNuxt({
     ],
   },
 })
-  .append(
-    // your custom flat config here...
-  )
+  .append({
+    rules: {
+      'vue/multi-word-component-names': ['error', {
+        ignores: ['index', 'Logo'],
+      }],
+      '@stylistic/brace-style': ['error', '1tbs'],
+      '@stylistic/indent': ['error', 2],
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  })
