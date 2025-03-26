@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.4
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.3...v1.0.4)
+
+### 📖 Documentation
+
+- Add License ([a3ac8e5](https://github.com/roncallyt/nuxt-listmonk/commit/a3ac8e5))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.0.3
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.1...v1.0.3)
