@@ -4,6 +4,9 @@ const emit = defineEmits(['subscribed'])
 const email = ref('')
 const name = ref('')
 
+provide('email', email)
+provide('name', name)
+
 async function submit() {
   const subscriber = {
     email: email.value,
@@ -17,27 +20,9 @@ async function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <div>
-      <input
-        v-model="email"
-        type="email"
-        name="email"
-        placeholder="E-mail"
-      >
-    </div>
-
-    <div>
-      <input
-        v-model="name"
-        type="text"
-        name="name"
-        placeholder="Nome"
-      >
-    </div>
-
-    <button type="submit">
-      Enviar
-    </button>
+  <form
+    @submit.prevent="submit"
+  >
+    <slot />
   </form>
 </template>

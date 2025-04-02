@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { defineNuxtModule, createResolver, addComponent, addServerHandler, addImportsDir } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addComponentsDir } from '@nuxt/kit'
 import { defu } from 'defu'
 import type { NuxtModule } from 'nuxt/schema'
 
@@ -43,10 +43,9 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
 
     addImportsDir(resolve(runtimeDir, 'composables'))
 
-    addComponent({
-      filePath: resolve(runtimeDir, 'components/ListmonkForm.vue'),
-      name: 'ListmonkForm',
+    addComponentsDir({
       global: true,
+      path: resolve(runtimeDir, 'components'),
     })
 
     addServerHandler({
