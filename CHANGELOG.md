@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.5
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.4...v1.0.5)
+
+### 📖 Documentation
+
+- Add component documentation ([505c5c6](https://github.com/roncallyt/nuxt-listmonk/commit/505c5c6))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.0.4
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.3...v1.0.4)
