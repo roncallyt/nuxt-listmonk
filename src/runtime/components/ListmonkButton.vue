@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useSlots } from 'vue'
+
 defineProps<{
   type?: string
   title?: string
