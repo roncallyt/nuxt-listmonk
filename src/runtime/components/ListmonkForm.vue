@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, provide } from 'vue'
+import { useSubscribe } from '../composables/useSubscribe'
 
 const emit = defineEmits(['subscribed'])
 
