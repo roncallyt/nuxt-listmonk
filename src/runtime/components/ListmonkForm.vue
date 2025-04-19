@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, provide } from 'vue'
+
 const emit = defineEmits(['subscribed'])
 
 const email = ref('')

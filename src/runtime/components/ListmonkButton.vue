@@ -11,7 +11,7 @@ const slots = useSlots()
   <button
     :type="type || 'submit'"
   >
-    <template v-if="slots.default">
+    <template v-if="slots?.default">
       <slot />
     </template>
 
