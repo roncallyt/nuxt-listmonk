@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+
 const props = defineProps<{
   field: 'email' | 'name'
   id?: string
