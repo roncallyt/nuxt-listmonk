@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.1.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.5...v1.1.0)
+
+### 🚀 Enhancements
+
+- Add possibility to use Slot in ListmonkButton component ([4970577](https://github.com/roncallyt/nuxt-listmonk/commit/4970577))
+
+### 📖 Documentation
+
+- Add documentation about ListmonkButton slot ([5c9a8f6](https://github.com/roncallyt/nuxt-listmonk/commit/5c9a8f6))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.0.5
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.4...v1.0.5)
