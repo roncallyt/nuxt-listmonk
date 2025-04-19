@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.1.3
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.2...v1.1.3)
+
+### 🩹 Fixes
+
+- Fix imports on button component ([51c56f1](https://github.com/roncallyt/nuxt-listmonk/commit/51c56f1))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.1.2
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.1...v1.1.2)
