@@ -27,7 +27,7 @@
         </template>
       </ListmonkInputGroup>
 
-      <ListmonkButton title="Send" />
+      <ListmonkButton>Send</ListmonkButton>
     </ListmonkForm>
   </div>
 </template>
