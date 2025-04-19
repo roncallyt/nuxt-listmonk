@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.1.1
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.0...v1.1.1)
+
+### 🩹 Fixes
+
+- Fix imports in form component and a SSR problem in button component ([8524682](https://github.com/roncallyt/nuxt-listmonk/commit/8524682))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.1.0
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.0.5...v1.1.0)
