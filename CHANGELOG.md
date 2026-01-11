@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.1
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.2.0...v1.2.1)
+
+### 📖 Documentation
+
+- Add documentation about new event on form component ([022593e](https://github.com/roncallyt/nuxt-listmonk/commit/022593e))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.2.0
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.4...v1.2.0)
