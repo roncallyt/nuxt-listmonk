@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.2
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.2.1...v1.2.2)
+
+### 🏡 Chore
+
+- Update npm packages ([ae0747c](https://github.com/roncallyt/nuxt-listmonk/commit/ae0747c))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.2.1
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.2.0...v1.2.1)
