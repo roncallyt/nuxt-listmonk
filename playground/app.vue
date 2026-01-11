@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ListmonkForm>
+    <ListmonkForm
+      @subscribed="console.log('User subscribed!')"
+      @cleared="console.log('Form cleared!')"
+    >
       <ListmonkInputGroup
         id="input-email"
         label="E-mail"
