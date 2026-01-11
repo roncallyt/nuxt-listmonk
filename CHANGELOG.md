@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.4...v1.2.0)
+
+### 🚀 Enhancements
+
+- Add clear method to form component ([06f8a8b](https://github.com/roncallyt/nuxt-listmonk/commit/06f8a8b))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.1.4
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.1.3...v1.1.4)
