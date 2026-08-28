@@ -6,47 +6,52 @@
     "type": "git",
     "url": "git+https://github.com/roncallyt/nuxt-listmonk.git"
   },
+  "homepage": "https://nuxt-listmonk.t7n.dev",
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "types": "./dist/module.d.mts",
+      "import": "./dist/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/module.mjs",
+  "types": "./dist/module.d.mts",
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
-    "lint": "eslint .",
+    "lint": "eslint eslint.config.mjs src playground test docs/app docs/nuxt.config.ts",
     "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:watch": "vitest",
+    "test:types": "vue-tsc --noEmit && vue-tsc --noEmit -p playground/tsconfig.json",
+    "changelog": "changelogen",
+    "release:prepare": "changelogen --bump",
+    "docs:dev": "npm --prefix docs run dev",
+    "docs:build": "npm --prefix docs run build"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.16.0",
-    "defu": "^6.1.4"
+    "@nuxt/kit": "^4.5.2",
+    "defu": "^6.1.7"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^2.7.0",
-    "@nuxt/eslint-config": "^1.12.1",
-    "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.16.0",
-    "@nuxt/test-utils": "^3.23.0",
-    "@types/node": "^25.0.6",
+    "@nuxt/eslint-config": "^1.17.0",
+    "@nuxt/module-builder": "^1.0.3",
+    "@nuxt/schema": "^4.5.2",
+    "@nuxt/test-utils": "^4.2.0",
+    "@types/node": "^24.13.3",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.2",
-    "nuxt": "^3.16.0",
-    "typescript": "~5.8.2",
-    "vitest": "^3.2.4",
-    "vue-tsc": "^2.2.12"
+    "eslint": "^10.9.1",
+    "nuxt": "^4.5.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11",
+    "vue-tsc": "^3.3.11"
   }
 }

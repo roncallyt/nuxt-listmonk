@@ -14,7 +14,7 @@
 ## Features
 
 <!-- Highlight some of the features your module provide here -->
-- Nuxt 3 ready
+- Nuxt 3.21 and Nuxt 4 ready
 - Typescript support
 
 ## Quick Setup
@@ -58,9 +58,10 @@ That's it! You can now use Listmonk in your Nuxt app ✨
   # Run Vitest
   npm run test
   npm run test:watch
-  
-  # Release new version
-  npm run release
+
+  # Build and inspect the package
+  npm run prepack
+  npm pack --dry-run
   ```
 
 </details>

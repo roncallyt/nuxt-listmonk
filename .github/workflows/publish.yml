@@ -1,0 +1,51 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish (for example, v2.0.0)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: npm
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Use an npm version with trusted publishing support
+        run: npm install --global 'npm@^11.5.1'
+
+      - name: Verify tag matches package version
+        run: test "$RELEASE_TAG" = "v$(node -p "require('./package.json').version")"
+
+      - run: npm ci
+      - run: npm run dev:prepare
+      - run: npm run lint
+      - run: npm run test:types
+      - run: npm test
+      - run: npm publish

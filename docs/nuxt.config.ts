@@ -1,20 +1,29 @@
 export default defineNuxtConfig({
-  // https://github.com/nuxt-themes/docus
-  extends: ['@nuxt-themes/docus'],
-  modules: [// Remove it if you don't use Plausible analytics
-    // https://github.com/nuxt-modules/plausible
-    '@nuxtjs/plausible',
-    '@nuxtjs/color-mode',
-    '@vueuse/nuxt',
-    '@nuxtjs/tailwindcss',
-  ],
-  devtools: { enabled: true },
-  compatibilityDate: '2024-10-24',
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        verbatimModuleSyntax: false,
-      },
+  extends: ['docus'],
+  site: {
+    name: 'Nuxt Listmonk',
+    url: 'https://nuxt-listmonk.t7n.dev',
+  },
+  workspaceDir: import.meta.dirname,
+  compatibilityDate: '2026-08-28',
+  nitro: {
+    output: {
+      publicDir: 'dist',
     },
+    prerender: {
+      routes: [
+        '/introduction/getting-started',
+        '/components/listmonkform',
+        '/components/listmonkinputgroup',
+        '/components/listmonkinput',
+        '/components/listmonkbutton',
+        '/api/composables',
+      ],
+    },
+  },
+  llms: {
+    domain: 'https://nuxt-listmonk.t7n.dev',
+    title: 'Nuxt Listmonk',
+    description: 'Listmonk integration for Nuxt applications.',
   },
 })

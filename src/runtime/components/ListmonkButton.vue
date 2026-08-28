@@ -2,7 +2,7 @@
 import { useSlots } from 'vue'
 
 defineProps<{
-  type?: string
+  type?: 'button' | 'reset' | 'submit'
   title?: string
 }>()
 

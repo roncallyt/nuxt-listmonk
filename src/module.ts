@@ -13,7 +13,7 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     name: 'nuxt-listmonk',
     configKey: 'listmonk',
     compatibility: {
-      nuxt: '>=3.0.0',
+      nuxt: '^3.21.0 || ^4.0.0',
     },
   },
 

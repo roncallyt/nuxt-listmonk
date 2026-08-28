@@ -1,0 +1,10 @@
+[build]
+  command = "git config remote.origin.url https://github.com/roncallyt/nuxt-listmonk.git && npm ci && npm run dev:prepare && npm --prefix docs ci && npm --prefix docs run generate"
+  publish = "docs/dist"
+
+[build.environment]
+  NODE_VERSION = "22.22.2"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+[context.deploy-preview]
+  command = "git config remote.origin.url https://github.com/roncallyt/nuxt-listmonk.git && npm ci && npm run dev:prepare && npm --prefix docs ci && npm --prefix docs run generate"

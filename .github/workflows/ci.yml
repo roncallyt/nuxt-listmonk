@@ -2,44 +2,48 @@ name: ci
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22.22.2
+          cache: npm
+      - run: npm ci
+      - run: npm run dev:prepare
+      - run: npm run lint
+      - run: npm run test:types
+      - run: npm test
+      - run: npm run prepack
+      - run: npm pack --dry-run
 
-      - name: Install dependencies
-        run: npx nypm@latest i
-
-      - name: Lint
-        run: npm run lint
-
-  test:
+  compatibility:
+    strategy:
+      matrix:
+        include:
+          - nuxt: '^3.21.0'
+            node: 20.19.0
+          - nuxt: '^4.5.2'
+            node: 22.22.2
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npx nypm@latest i
-
-      - name: Playground prepare
-        run: npm run dev:prepare
-
-      - name: Test
-        run: npm run test
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false "nuxt@${{ matrix.nuxt }}"
+      - run: npm run dev:prepare
+      - run: npm test
