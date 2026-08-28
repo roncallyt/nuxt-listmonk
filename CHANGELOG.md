@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.0.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.2.3...v2.0.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v1.2.3
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v1.2.2...v1.2.3)
