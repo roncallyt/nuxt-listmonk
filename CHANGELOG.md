@@ -1,5 +1,23 @@
 # Changelog
 
+## v3.0.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v2.0.0...v3.0.0)
+
+### 🚀 Enhancements
+
+- ⚠️ Replace public form subscriptions with the authenticated Listmonk subscriber API ([#5](https://github.com/roncallyt/nuxt-listmonk/pull/5))
+- Preserve existing subscriber list memberships when adding the configured list ([#5](https://github.com/roncallyt/nuxt-listmonk/pull/5))
+
+#### ⚠️ Breaking Changes
+
+- `listId` must now contain the numeric Listmonk API list ID instead of a public list UUID.
+- `apiUsername` and `apiToken` are now required.
+- `useSubscribe()` now rejects on failures, and `ListmonkForm` emits `error` without clearing its values.
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
 
 ## v2.0.0
 
@@ -7,11 +25,11 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
+- ⚠️ Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
+- ⚠️ Modernize Nuxt support and deployment ([7335480](https://github.com/roncallyt/nuxt-listmonk/commit/7335480))
 
 ### ❤️ Contributors
 
@@ -192,7 +210,6 @@
 
 ## v1.0.1
 
-
 ### 📖 Documentation
 
 - Update README ([6d91fb7](https://github.com/roncallyt/nuxt-listmonk/commit/6d91fb7))
@@ -200,4 +217,3 @@
 ### ❤️ Contributors
 
 - Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
-
