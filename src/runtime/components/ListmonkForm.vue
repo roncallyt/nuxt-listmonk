@@ -2,7 +2,7 @@
 import { ref, provide } from 'vue'
 import { useSubscribe } from '../composables/useSubscribe'
 
-const emit = defineEmits(['subscribed', 'cleared'])
+const emit = defineEmits(['subscribed', 'cleared', 'error'])
 
 const email = ref('')
 const name = ref('')
@@ -23,10 +23,15 @@ async function submit() {
     name: name.value,
   }
 
-  await useSubscribe(subscriber)
+  try {
+    await useSubscribe(subscriber)
+  } catch (error) {
+    emit('error', error)
+
+    return
+  }
 
   emit('subscribed', subscriber)
-
   clear()
 }
 </script>

@@ -5,7 +5,9 @@ import type { NuxtModule } from 'nuxt/schema'
 
 export interface ModuleOptions {
   host: string
-  listId: string
+  listId: string | number
+  apiUsername: string
+  apiToken: string
 }
 
 const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
@@ -20,6 +22,8 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
   defaults: {
     host: '',
     listId: '',
+    apiUsername: '',
+    apiToken: '',
   },
 
   setup(options, nuxt) {
@@ -29,11 +33,13 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
 
     nuxt.options.build.transpile.push(runtimeDir)
 
-    nuxt.options.runtimeConfig.listmonk = defu<ModuleOptions, ModuleOptions[]>(
+    nuxt.options.runtimeConfig.listmonk = defu(
       nuxt.options.runtimeConfig.listmonk,
       {
         host: options.host,
-        listId: options.listId,
+        listId: String(options.listId),
+        apiUsername: options.apiUsername,
+        apiToken: options.apiToken,
       },
     )
 
