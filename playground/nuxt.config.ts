@@ -5,5 +5,7 @@ export default defineNuxtConfig({
   listmonk: {
     host: process.env.NUXT_LISTMONK_HOST,
     listId: process.env.NUXT_LISTMONK_LIST_ID,
+    apiUsername: process.env.NUXT_LISTMONK_API_USERNAME,
+    apiToken: process.env.NUXT_LISTMONK_API_TOKEN,
   },
 })

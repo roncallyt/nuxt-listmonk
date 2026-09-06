@@ -27,11 +27,22 @@ npx nuxi module add nuxt-listmonk
 
 2. Add `nuxt-listmonk` to the `modules` section of `nuxt.config.ts`:
 
-```js
+```ts
 export default defineNuxtConfig({
   modules: ['nuxt-listmonk'],
+  listmonk: {
+    host: process.env.NUXT_LISTMONK_HOST,
+    listId: process.env.NUXT_LISTMONK_LIST_ID,
+    apiUsername: process.env.NUXT_LISTMONK_API_USERNAME,
+    apiToken: process.env.NUXT_LISTMONK_API_TOKEN,
+  },
 });
 ```
+
+Use the numeric Listmonk API list ID (not the public list UUID) and credentials
+from a dedicated API user. The credentials stay in Nuxt's private server runtime
+configuration.
+
 That's it! You can now use Listmonk in your Nuxt app ✨
 
 ## Contribution

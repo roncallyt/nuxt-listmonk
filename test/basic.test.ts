@@ -12,4 +12,13 @@ describe('ssr', async () => {
     const html = await $fetch('/')
     expect(html).toContain('<div>basic</div>')
   })
+
+  it('rejects an invalid subscriber e-mail before contacting Listmonk', async () => {
+    await expect($fetch('/api/subscribe', {
+      method: 'POST',
+      body: { email: 'invalid-email' },
+    })).rejects.toMatchObject({
+      statusCode: 400,
+    })
+  })
 })

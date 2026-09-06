@@ -3,6 +3,7 @@
     <ListmonkForm
       @subscribed="console.log('User subscribed!')"
       @cleared="console.log('Form cleared!')"
+      @error="console.error('Subscription failed!')"
     >
       <ListmonkInputGroup
         id="input-email"
