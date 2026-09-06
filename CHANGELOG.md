@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.0.1
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v3.0.0...v3.0.1)
+
+### 📖 Documentation
+
+- Remove unnecessary documentation ([ffd3ddf](https://github.com/roncallyt/nuxt-listmonk/commit/ffd3ddf))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v3.0.0
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v2.0.0...v3.0.0)
