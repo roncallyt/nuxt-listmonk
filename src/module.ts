@@ -3,6 +3,8 @@ import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addC
 import { defu } from 'defu'
 import type { NuxtModule } from 'nuxt/schema'
 
+export type { ListmonkSubscriber } from './runtime/types'
+
 export interface ModuleOptions {
   host: string
   listId: string | number

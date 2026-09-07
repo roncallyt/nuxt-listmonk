@@ -11,10 +11,16 @@ describe('useSubscribe', () => {
     const fetchMock = vi.fn().mockResolvedValue(response)
     vi.stubGlobal('$fetch', fetchMock)
 
-    await expect(useSubscribe({ email: 'person@example.com' })).resolves.toBe(response)
+    await expect(useSubscribe({
+      email: 'person@example.com',
+      recaptchaToken: 'test-token',
+    })).resolves.toBe(response)
     expect(fetchMock).toHaveBeenCalledWith('/api/subscribe', {
       method: 'POST',
-      body: { email: 'person@example.com' },
+      body: {
+        email: 'person@example.com',
+        recaptchaToken: 'test-token',
+      },
     })
   })
 
