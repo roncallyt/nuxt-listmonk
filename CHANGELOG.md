@@ -1,5 +1,23 @@
 # Changelog
 
+## v3.1.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v3.0.1...v3.1.0)
+
+### 🚀 Enhancements
+
+- Allow custom subscribe payload fields ([9b8f647](https://github.com/roncallyt/nuxt-listmonk/commit/9b8f647))
+- Add blocking subscription guard hook ([56b3b5a](https://github.com/roncallyt/nuxt-listmonk/commit/56b3b5a))
+- Add subscription observer hooks ([ed0d6b0](https://github.com/roncallyt/nuxt-listmonk/commit/ed0d6b0))
+
+### 📖 Documentation
+
+- Document subscription lifecycle hooks ([a798308](https://github.com/roncallyt/nuxt-listmonk/commit/a798308))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v3.0.1
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v3.0.0...v3.0.1)
