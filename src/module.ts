@@ -18,10 +18,37 @@ export interface ListmonkSubscribeContext {
   }>
 }
 
+export interface ListmonkSubscribeAfterContext extends ListmonkSubscribeContext {
+  response: Readonly<{
+    message: string
+  }>
+}
+
+export type ListmonkSubscribeErrorStage = 'before' | 'configuration' | 'listmonk'
+
+export interface ListmonkSubscribeErrorContext {
+  event: H3Event
+  subscriber: Readonly<{
+    email: string
+    name: string
+  }>
+  stage: ListmonkSubscribeErrorStage
+  error: Readonly<{
+    statusCode: number
+    statusMessage: string
+  }>
+}
+
 declare module 'nitropack' {
   interface NitroRuntimeHooks {
     'listmonk:subscribe:before': (
       context: ListmonkSubscribeContext,
+    ) => void | Promise<void>
+    'listmonk:subscribe:after': (
+      context: ListmonkSubscribeAfterContext,
+    ) => void | Promise<void>
+    'listmonk:subscribe:error': (
+      context: ListmonkSubscribeErrorContext,
     ) => void | Promise<void>
   }
 }
