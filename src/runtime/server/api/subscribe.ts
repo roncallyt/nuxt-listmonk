@@ -1,5 +1,6 @@
 import { createError, defineEventHandler, readBody } from 'h3'
 import { useRuntimeConfig } from '#imports'
+import { useNitroApp } from 'nitropack/runtime'
 import {
   ListmonkRequestError,
   normalizeListmonkConfig,
@@ -8,10 +9,11 @@ import {
 import type { ListmonkRuntimeConfig } from '../utils/listmonk'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  const { name, email } = body && typeof body === 'object'
-    ? body
+  const requestBody: unknown = await readBody(event)
+  const body = requestBody && typeof requestBody === 'object' && !Array.isArray(requestBody)
+    ? requestBody as Record<string, unknown>
     : { name: undefined, email: undefined }
+  const { name, email } = body
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
 
   if (
@@ -33,6 +35,10 @@ export default defineEventHandler(async (event) => {
   }
 
   let listmonkConfig: ListmonkRuntimeConfig
+  const subscriber = {
+    email: normalizedEmail,
+    name: name?.trim() ?? '',
+  }
 
   try {
     listmonkConfig = normalizeListmonkConfig(useRuntimeConfig().listmonk)
@@ -45,11 +51,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  await useNitroApp().hooks.callHook('listmonk:subscribe:before', {
+    event,
+    body,
+    subscriber,
+  })
+
   try {
-    await subscribeWithListmonk({
-      email: normalizedEmail,
-      name: name?.trim() ?? '',
-    }, listmonkConfig)
+    await subscribeWithListmonk(subscriber, listmonkConfig)
   } catch (error) {
     const status = error instanceof ListmonkRequestError
       ? ` (upstream status: ${error.status})`

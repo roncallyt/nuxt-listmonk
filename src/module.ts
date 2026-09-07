@@ -1,9 +1,30 @@
 import { fileURLToPath } from 'node:url'
-import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addComponentsDir } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addComponentsDir, addTypeTemplate } from '@nuxt/kit'
 import { defu } from 'defu'
+import type { H3Event } from 'h3'
 import type { NuxtModule } from 'nuxt/schema'
 
-export type { ListmonkSubscriber } from './runtime/types'
+export interface ListmonkSubscriber {
+  email: string
+  name?: string
+}
+
+export interface ListmonkSubscribeContext {
+  event: H3Event
+  body: Readonly<Record<string, unknown>>
+  subscriber: Readonly<{
+    email: string
+    name: string
+  }>
+}
+
+declare module 'nitropack' {
+  interface NitroRuntimeHooks {
+    'listmonk:subscribe:before': (
+      context: ListmonkSubscribeContext,
+    ) => void | Promise<void>
+  }
+}
 
 export interface ModuleOptions {
   host: string
@@ -54,6 +75,14 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     addComponentsDir({
       global: true,
       path: resolve(runtimeDir, 'components'),
+    })
+
+    addTypeTemplate({
+      filename: 'types/nuxt-listmonk.d.ts',
+      getContents: () => `import 'nuxt-listmonk'\n\nexport {}`,
+    }, {
+      nitro: true,
+      nuxt: true,
     })
 
     addServerHandler({
