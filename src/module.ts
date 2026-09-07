@@ -1,7 +1,57 @@
 import { fileURLToPath } from 'node:url'
-import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addComponentsDir } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addServerHandler, addImportsDir, addComponentsDir, addTypeTemplate } from '@nuxt/kit'
 import { defu } from 'defu'
+import type { H3Event } from 'h3'
 import type { NuxtModule } from 'nuxt/schema'
+
+export interface ListmonkSubscriber {
+  email: string
+  name?: string
+}
+
+export interface ListmonkSubscribeContext {
+  event: H3Event
+  body: Readonly<Record<string, unknown>>
+  subscriber: Readonly<{
+    email: string
+    name: string
+  }>
+}
+
+export interface ListmonkSubscribeAfterContext extends ListmonkSubscribeContext {
+  response: Readonly<{
+    message: string
+  }>
+}
+
+export type ListmonkSubscribeErrorStage = 'before' | 'configuration' | 'listmonk'
+
+export interface ListmonkSubscribeErrorContext {
+  event: H3Event
+  subscriber: Readonly<{
+    email: string
+    name: string
+  }>
+  stage: ListmonkSubscribeErrorStage
+  error: Readonly<{
+    statusCode: number
+    statusMessage: string
+  }>
+}
+
+declare module 'nitropack' {
+  interface NitroRuntimeHooks {
+    'listmonk:subscribe:before': (
+      context: ListmonkSubscribeContext,
+    ) => void | Promise<void>
+    'listmonk:subscribe:after': (
+      context: ListmonkSubscribeAfterContext,
+    ) => void | Promise<void>
+    'listmonk:subscribe:error': (
+      context: ListmonkSubscribeErrorContext,
+    ) => void | Promise<void>
+  }
+}
 
 export interface ModuleOptions {
   host: string
@@ -52,6 +102,14 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     addComponentsDir({
       global: true,
       path: resolve(runtimeDir, 'components'),
+    })
+
+    addTypeTemplate({
+      filename: 'types/nuxt-listmonk.d.ts',
+      getContents: () => `import 'nuxt-listmonk'\n\nexport {}`,
+    }, {
+      nitro: true,
+      nuxt: true,
     })
 
     addServerHandler({

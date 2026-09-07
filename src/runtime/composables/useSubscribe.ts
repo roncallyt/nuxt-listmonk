@@ -1,4 +1,6 @@
-export async function useSubscribe(body: { email: string, name?: string }) {
+import type { ListmonkSubscriber } from '../../module'
+
+export async function useSubscribe<TBody extends ListmonkSubscriber>(body: TBody) {
   return await $fetch(`/api/subscribe`, {
     method: 'POST',
     body,
