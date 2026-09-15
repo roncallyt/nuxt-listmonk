@@ -4,9 +4,23 @@ import { defu } from 'defu'
 import type { H3Event } from 'h3'
 import type { NuxtModule } from 'nuxt/schema'
 
+export type ListmonkJsonPrimitive = string | number | boolean | null
+
+export type ListmonkJsonValue
+  = ListmonkJsonPrimitive
+    | ListmonkJsonValue[]
+    | ListmonkAttributes
+
+export interface ListmonkAttributes {
+  [key: string]: ListmonkJsonValue
+}
+
+export type ListmonkExistingSubscriberMode = 'preserve' | 'merge'
+
 export interface ListmonkSubscriber {
   email: string
   name?: string
+  attribs?: ListmonkAttributes
 }
 
 export interface ListmonkSubscribeContext {
@@ -15,6 +29,7 @@ export interface ListmonkSubscribeContext {
   subscriber: Readonly<{
     email: string
     name: string
+    attribs: Readonly<ListmonkAttributes>
   }>
 }
 
@@ -31,6 +46,7 @@ export interface ListmonkSubscribeErrorContext {
   subscriber: Readonly<{
     email: string
     name: string
+    attribs: Readonly<ListmonkAttributes>
   }>
   stage: ListmonkSubscribeErrorStage
   error: Readonly<{
@@ -58,6 +74,7 @@ export interface ModuleOptions {
   listId: string | number
   apiUsername: string
   apiToken: string
+  existingSubscriberMode?: ListmonkExistingSubscriberMode
 }
 
 const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
@@ -74,6 +91,7 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     listId: '',
     apiUsername: '',
     apiToken: '',
+    existingSubscriberMode: 'preserve',
   },
 
   setup(options, nuxt) {
@@ -90,6 +108,7 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
         listId: String(options.listId),
         apiUsername: options.apiUsername,
         apiToken: options.apiToken,
+        existingSubscriberMode: options.existingSubscriberMode ?? 'preserve',
       },
     )
 

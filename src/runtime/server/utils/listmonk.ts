@@ -1,10 +1,15 @@
 import { Buffer } from 'node:buffer'
+import type {
+  ListmonkAttributes,
+  ListmonkExistingSubscriberMode,
+} from '../../../module'
 
 export interface ListmonkRuntimeConfig {
   host: string
   listId: number
   apiUsername: string
   apiToken: string
+  existingSubscriberMode: ListmonkExistingSubscriberMode
 }
 
 interface RawListmonkConfig {
@@ -12,6 +17,7 @@ interface RawListmonkConfig {
   listId?: unknown
   apiUsername?: unknown
   apiToken?: unknown
+  existingSubscriberMode?: unknown
 }
 
 interface Subscriber {
@@ -42,9 +48,19 @@ export function normalizeListmonkConfig(config: RawListmonkConfig): ListmonkRunt
   const listId = typeof config.listId === 'number' || typeof config.listId === 'string'
     ? Number(config.listId)
     : Number.NaN
+  const existingSubscriberMode = config.existingSubscriberMode ?? 'preserve'
 
-  if (!host || !apiUsername || !apiToken || !Number.isInteger(listId) || listId < 1) {
-    throw new Error('Listmonk host, API credentials, and a positive numeric list ID are required.')
+  if (
+    !host
+    || !apiUsername
+    || !apiToken
+    || !Number.isInteger(listId)
+    || listId < 1
+    || (existingSubscriberMode !== 'preserve' && existingSubscriberMode !== 'merge')
+  ) {
+    throw new Error(
+      'Listmonk host, API credentials, a positive numeric list ID, and a valid existing subscriber mode are required.',
+    )
   }
 
   return {
@@ -52,11 +68,12 @@ export function normalizeListmonkConfig(config: RawListmonkConfig): ListmonkRunt
     listId,
     apiUsername,
     apiToken,
+    existingSubscriberMode,
   }
 }
 
 export async function subscribeWithListmonk(
-  subscriber: { email: string, name: string },
+  subscriber: { email: string, name?: string, attribs?: ListmonkAttributes },
   config: ListmonkRuntimeConfig,
   fetchImplementation: typeof fetch = fetch,
 ): Promise<void> {
@@ -66,16 +83,18 @@ export async function subscribeWithListmonk(
     'Content-Type': 'application/json',
   }
 
+  const createBody = {
+    name: subscriber.name ?? '',
+    email: subscriber.email,
+    status: 'enabled',
+    lists: [config.listId],
+    preconfirm_subscriptions: true,
+    ...(subscriber.attribs !== undefined ? { attribs: subscriber.attribs } : {}),
+  }
   const createResponse = await fetchImplementation(`${config.host}/api/subscribers`, {
     method: 'POST',
     headers,
-    body: JSON.stringify({
-      name: subscriber.name,
-      email: subscriber.email,
-      status: 'enabled',
-      lists: [config.listId],
-      preconfirm_subscriptions: true,
-    }),
+    body: JSON.stringify(createBody),
   })
 
   if (createResponse.ok) {
@@ -106,6 +125,32 @@ export async function subscribeWithListmonk(
 
   if (!addToListResponse.ok) {
     throw new ListmonkRequestError(addToListResponse.status)
+  }
+
+  if (config.existingSubscriberMode !== 'merge') {
+    return
+  }
+
+  const patchBody = {
+    ...(subscriber.name !== undefined ? { name: subscriber.name } : {}),
+    ...(subscriber.attribs !== undefined ? { attribs: subscriber.attribs } : {}),
+  }
+
+  if (Object.keys(patchBody).length === 0) {
+    return
+  }
+
+  const patchResponse = await fetchImplementation(
+    `${config.host}/api/subscribers/${subscriberId}`,
+    {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(patchBody),
+    },
+  )
+
+  if (!patchResponse.ok) {
+    throw new ListmonkRequestError(patchResponse.status)
   }
 }
 

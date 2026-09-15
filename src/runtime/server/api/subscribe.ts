@@ -3,6 +3,8 @@ import { useRuntimeConfig } from '#imports'
 import { useNitroApp } from 'nitropack/runtime'
 import type { NitroApp } from 'nitropack/types'
 import type {
+  ListmonkAttributes,
+  ListmonkJsonValue,
   ListmonkSubscribeAfterContext,
   ListmonkSubscribeErrorContext,
 } from '../../../module'
@@ -49,12 +51,65 @@ function sanitizeError(error: unknown) {
   }
 }
 
+function normalizeJsonValue(value: unknown, ancestors: Set<object>): ListmonkJsonValue {
+  if (
+    value === null
+    || typeof value === 'string'
+    || typeof value === 'boolean'
+  ) {
+    return value
+  }
+
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  if (typeof value !== 'object') {
+    throw new TypeError('Value is not JSON-safe.')
+  }
+
+  if (ancestors.has(value)) {
+    throw new TypeError('Cyclic values are not JSON-safe.')
+  }
+
+  ancestors.add(value)
+
+  try {
+    if (Array.isArray(value)) {
+      return value.map(item => normalizeJsonValue(item, ancestors))
+    }
+
+    const prototype = Object.getPrototypeOf(value)
+
+    if (prototype !== Object.prototype && prototype !== null) {
+      throw new TypeError('Value is not a plain JSON object.')
+    }
+
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [
+        key,
+        normalizeJsonValue(item, ancestors),
+      ]),
+    )
+  } finally {
+    ancestors.delete(value)
+  }
+}
+
+function normalizeAttributes(value: unknown): ListmonkAttributes {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    throw new TypeError('Attributes must be a plain JSON object.')
+  }
+
+  return normalizeJsonValue(value, new Set()) as ListmonkAttributes
+}
+
 export default defineEventHandler(async (event) => {
   const requestBody: unknown = await readBody(event)
   const body = requestBody && typeof requestBody === 'object' && !Array.isArray(requestBody)
     ? requestBody as Record<string, unknown>
     : { name: undefined, email: undefined }
-  const { name, email } = body
+  const { attribs, name, email } = body
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
 
   if (
@@ -75,10 +130,29 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  let normalizedAttribs: ListmonkAttributes | undefined
+
+  if (attribs !== undefined) {
+    try {
+      normalizedAttribs = normalizeAttributes(attribs)
+    } catch {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid attribs in the subscribe body.',
+      })
+    }
+  }
+
   let listmonkConfig: ListmonkRuntimeConfig
   const subscriber = {
     email: normalizedEmail,
     name: name?.trim() ?? '',
+    attribs: normalizedAttribs ?? {},
+  }
+  const submittedSubscriber = {
+    email: subscriber.email,
+    ...(name !== undefined ? { name: subscriber.name } : {}),
+    ...(normalizedAttribs !== undefined ? { attribs: normalizedAttribs } : {}),
   }
   const nitroApp = useNitroApp()
 
@@ -120,7 +194,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    await subscribeWithListmonk(subscriber, listmonkConfig)
+    await subscribeWithListmonk(submittedSubscriber, listmonkConfig)
   } catch (error) {
     const status = error instanceof ListmonkRequestError
       ? ` (upstream status: ${error.status})`

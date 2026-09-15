@@ -50,6 +50,7 @@ const listmonkConfig = {
   listId: 7,
   apiUsername: 'newsletter-api',
   apiToken: 'test-token',
+  existingSubscriberMode: 'preserve',
 }
 
 describe('subscribe route', () => {
@@ -69,6 +70,10 @@ describe('subscribe route', () => {
     const body = {
       email: ' person@example.com ',
       name: ' Person ',
+      attribs: {
+        locale: 'pt-BR',
+        preferences: { topics: ['security', null] },
+      },
       recaptchaToken: 'captcha-token',
     }
     const response = {
@@ -84,11 +89,19 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: 'Person',
+        attribs: {
+          locale: 'pt-BR',
+          preferences: { topics: ['security', null] },
+        },
       },
     })
     expect(mocks.subscribeWithListmonk).toHaveBeenCalledWith({
       email: 'person@example.com',
       name: 'Person',
+      attribs: {
+        locale: 'pt-BR',
+        preferences: { topics: ['security', null] },
+      },
     }, listmonkConfig)
     expect(mocks.callHook).toHaveBeenNthCalledWith(2, 'listmonk:subscribe:after', {
       event,
@@ -96,6 +109,10 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: 'Person',
+        attribs: {
+          locale: 'pt-BR',
+          preferences: { topics: ['security', null] },
+        },
       },
       response,
     })
@@ -124,6 +141,7 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: '',
+        attribs: {},
       },
       stage: 'before',
       error: {
@@ -154,6 +172,7 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: '',
+        attribs: {},
       },
       stage: 'before',
       error: {
@@ -187,6 +206,7 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: '',
+        attribs: {},
       },
       stage: 'configuration',
       error: {
@@ -211,6 +231,7 @@ describe('subscribe route', () => {
       subscriber: {
         email: 'person@example.com',
         name: '',
+        attribs: {},
       },
       stage: 'listmonk',
       error: {
@@ -265,6 +286,43 @@ describe('subscribe route', () => {
 
     await expect(subscribeHandler(event)).rejects.toMatchObject({
       statusCode: 400,
+    })
+    expect(mocks.callHook).not.toHaveBeenCalled()
+    expect(mocks.subscribeWithListmonk).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    null,
+    [],
+    { score: Number.NaN },
+    { createdAt: new Date('2026-09-15T00:00:00Z') },
+    { nested: { value: undefined } },
+  ])('rejects invalid attributes before configuration and hooks', async (attribs) => {
+    mocks.readBody.mockResolvedValue({
+      email: 'person@example.com',
+      attribs,
+    })
+
+    await expect(subscribeHandler(event)).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: 'Invalid attribs in the subscribe body.',
+    })
+    expect(mocks.normalizeListmonkConfig).not.toHaveBeenCalled()
+    expect(mocks.callHook).not.toHaveBeenCalled()
+    expect(mocks.subscribeWithListmonk).not.toHaveBeenCalled()
+  })
+
+  it('rejects cyclic attributes', async () => {
+    const attribs: Record<string, unknown> = {}
+    attribs.self = attribs
+    mocks.readBody.mockResolvedValue({
+      email: 'person@example.com',
+      attribs,
+    })
+
+    await expect(subscribeHandler(event)).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: 'Invalid attribs in the subscribe body.',
     })
     expect(mocks.callHook).not.toHaveBeenCalled()
     expect(mocks.subscribeWithListmonk).not.toHaveBeenCalled()
