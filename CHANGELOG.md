@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.2.0
+
+[compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v3.1.0...v3.2.0)
+
+### 🚀 Enhancements
+
+- Add subscriber attribute merge mode ([36d15ca](https://github.com/roncallyt/nuxt-listmonk/commit/36d15ca))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @humanfs/node from 0.16.7 to 0.16.8 ([6095b09](https://github.com/roncallyt/nuxt-listmonk/commit/6095b09))
+
+### ❤️ Contributors
+
+- Thomerson Roncally Araújo Teixeira ([@roncallyt](https://github.com/roncallyt))
+
 ## v3.1.0
 
 [compare changes](https://github.com/roncallyt/nuxt-listmonk/compare/v3.0.1...v3.1.0)
