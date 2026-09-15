@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     listId: process.env.NUXT_LISTMONK_LIST_ID,
     apiUsername: process.env.NUXT_LISTMONK_API_USERNAME,
     apiToken: process.env.NUXT_LISTMONK_API_TOKEN,
+    existingSubscriberMode: 'preserve',
   },
 });
 ```
@@ -42,6 +43,23 @@ export default defineNuxtConfig({
 Use the numeric Listmonk API list ID (not the public list UUID) and credentials
 from a dedicated API user. The credentials stay in Nuxt's private server runtime
 configuration.
+
+Subscriber attributes can be sent as a typed JSON object:
+
+```ts
+await useSubscribe({
+  email: 'person@example.com',
+  attribs: {
+    locale: 'pt-BR',
+    interests: ['security', 'payments'],
+  },
+})
+```
+
+`existingSubscriberMode` defaults to `preserve`, which adds the configured list
+without changing an existing subscriber profile. Set it to `merge` to also merge
+submitted attributes and update a submitted name. Merge mode requires Listmonk
+6.1 or newer.
 
 That's it! You can now use Listmonk in your Nuxt app ✨
 
